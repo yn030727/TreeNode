@@ -1,21 +1,30 @@
 
+import com.sun.source.tree.Tree;
+
 import java.util.*;
 import java.util.function.Function;
 public class text {
     public static void main(String[] args) {
         System.out.println("请输入根节点的值：");
-        Scanner sc=new Scanner(System.in);
-        int data=sc.nextInt();
+        Scanner sc = new Scanner(System.in);
+        int data = sc.nextInt();
         //测试用例：1234567(层次遍历形式这里是) 输入:1 2 4 -1 -1 5 -1 -1 3 6 -1 -1 7 -1 -1
-        TreeNode root =creat_tree(data);
+        TreeNode root = creat_tree(data);
         //后序遍历输出 输出：4526731
         postorder(root);
         //非递归的前序遍历 输出:[1,2,4,5,3,6,7]
-        List<Integer> integerList=preOrder(root);
+        List<Integer> integerList = preOrder(root);
         System.out.println(integerList);
         //层次遍历  输出：[[1],[2,3],[4,5,6,7]]
-        List<List<Integer>> lists=levelOrder(root);
+        List<List<Integer>> lists = levelOrder(root);
         System.out.println(lists);
+        //哈夫曼树的创建、
+        int[] arr={1,2,3,4,5,6,7,8};
+        TreeNode root2=createHuffmanTree(arr);
+        if(root2!=null){
+            List<Integer> integerList1=preOrder(root2);
+            System.out.println(integerList1);
+        }
     }
     //建立二叉树
     public static TreeNode creat_tree(int data){
@@ -99,6 +108,33 @@ public class text {
             lists.add(list);
         }
         return lists;
+    }
+    //创建哈夫曼树
+    //将传递进来的int型数组转化成哈夫曼树并进行返回
+    public static TreeNode createHuffmanTree(int[] arr){
+        //创建一个集合，存入创建的节点
+        List<TreeNode> list=new ArrayList<>();
+        for (int item: arr
+             ) {
+            list.add(new TreeNode(item));
+        }
+        //每次都会从集合中remove一些点，最终会在list中剩下一个节点，这个节点就是根节点
+        while(list.size()>1){
+            //从小到大排序list
+            Collections.sort(list);
+            //取出两个最小的，第一个作为左节点，第二个作为右结点
+            TreeNode leftnode=list.get(0);
+            TreeNode rightnode=list.get(1);
+            //将左右孩子权值的和赋值给父节点
+            TreeNode parentnode=new TreeNode(leftnode.val+rightnode.val);
+            parentnode.setLeft(leftnode);
+            parentnode.setRight(rightnode);
+            //移除最小的两个，并将父节点当入到集合中
+            list.remove(leftnode);
+            list.remove(rightnode);
+            list.add(parentnode);
+        }
+        return list.get(0);
     }
 
 }
