@@ -9,16 +9,21 @@ public class text {
         Scanner sc = new Scanner(System.in);
         int data = sc.nextInt();
         //测试用例：1234567(层次遍历形式这里是) 输入:1 2 4 -1 -1 5 -1 -1 3 6 -1 -1 7 -1 -1
+        //测试用例：7654321  输入:6 5 4 -1 -1 3 -1 -1 5 2 -1 -1 1 -1 -1
         TreeNode root = creat_tree(data);
         //后序遍历输出 输出：4526731
+        System.out.println("输出后序遍历:");
         postorder(root);
         //非递归的前序遍历 输出:[1,2,4,5,3,6,7]
+        System.out.println("输出非递归的前序遍历:");
         List<Integer> integerList = preOrder(root);
         System.out.println(integerList);
         //层次遍历  输出：[[1],[2,3],[4,5,6,7]]
+        System.out.println("输出层次遍历:");
         List<List<Integer>> lists = levelOrder(root);
         System.out.println(lists);
-        //哈夫曼树的创建、
+        //哈夫曼树的创建
+        System.out.println("输出哈夫曼树");
         int[] arr={1,2,3,4,5,6,7,8};
         TreeNode root2=createHuffmanTree(arr);
         if(root2!=null){
